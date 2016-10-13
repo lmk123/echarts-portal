@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
+  <title>Title</title>
+  <script src="https://unpkg.com/echarts@3.2.3/dist/echarts.min.js"></script>
+  <script src="theme.js"></script>
+  <script>
+    portalTheme(echarts)
+  </script>
+  <style>
+    body {
+      background-color: #efeff4;
+    }
+
+    @media (min-width: 768px) {
+      #charts:after {
+        display: block;
+        content: '';
+        height: 0;
+        clear: both;
+      }
+
+      #charts > div {
+        width: 50%;
+        float: left;
+        height: 500px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      #charts > div {
+        height: 350px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="charts">
+    <div id="line"></div>
+    <div id="bar"></div>
+    <div id="radar"></div>
+    <div id="pie"></div>
+  </div>
+  <script>
+    (function (echarts) {
+      function d (func, time) {
+        var timeId
+        return function () {
+          if (typeof timeId === 'number') window.clearTimeout(timeId)
+          var args = arguments
+          timeId = window.setTimeout(function () {
+            func.apply(null, args)
+          }, time || 250)
+        }
+      }
+
+      var charts = []
+      window.addEventListener('resize', d(function () {
+        charts.forEach(function (chart) {
+          chart.resize()
+        })
+      }))
+
+      function $ (id) {
+        return document.getElementById(id)
+      }
+
+      // 折线图
+      var line = echarts.init($('line'), 'portal')
+      charts.push(line)
+      line.setOption({
+        title: {
+          text: '折线图'
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: ['联盟广告', '视频广告', '直接访问', '搜索引擎']
+        },
+        xAxis: {
+          type: 'category',
+          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            name: '联盟广告',
+            type: 'line',
+            data: [220, 182, 191, 234, 290, 330, 310]
+          },
+          {
+            name: '视频广告',
+            type: 'line',
+            data: [150, 232, 201, 154, 190, 330, 410]
+          },
+          {
+            name: '直接访问',
+            type: 'line',
+            data: [320, 332, 301, 334, 390, 330, 320]
+          },
+          {
+            name: '搜索引擎',
+            type: 'line',
+            data: [820, 932, 901, 934, 1290, 1330, 1320]
+          }
+        ]
+      })
+
+      var bar = echarts.init($('bar'), 'portal')
+      charts.push(bar)
+      bar.setOption({
+        title: {
+          text: '柱状图'
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: ['直接访问', '间接访问']
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+        ],
+        series: [
+          {
+            type: 'bar',
+            data: [10, 40]
+          }
+        ]
+      })
+
+      var radar = echarts.init($('radar'), 'portal')
+      charts.push(radar)
+      radar.setOption({
+        title: {
+          text: '雷达图'
+        },
+        tooltip: {},
+        legend: {
+          data: ['预算分配', '实际开销']
+        },
+        radar: {
+          indicator: [
+            { name: '销售', max: 6500 },
+            { name: '管理', max: 16000 },
+            { name: '信息技术', max: 30000 },
+            { name: '客服', max: 38000 },
+            { name: '研发', max: 52000 },
+            { name: '市场', max: 25000 }
+          ]
+        },
+        series: [{
+          name: '预算 vs 开销',
+          type: 'radar',
+          data: [
+            {
+              value: [4300, 10000, 28000, 35000, 50000, 19000],
+              name: '预算分配'
+            },
+            {
+              value: [5000, 14000, 28000, 31000, 42000, 21000],
+              name: '实际开销'
+            }
+          ]
+        }]
+      })
+
+      var pie = echarts.init($('pie'), 'portal')
+      charts.push(pie)
+      pie.setOption({
+        title: {
+          text: '环状图'
+        },
+        legend: {
+          data: ['直接访问', '邮件营销', '联盟广告']
+        },
+        series: [
+          {
+            type: 'pie',
+            data: [
+              { value: 335, name: '直接访问' },
+              { value: 310, name: '邮件营销' },
+              { value: 234, name: '联盟广告' }
+            ]
+          }
+        ]
+      })
+    })(window.echarts)
+  </script>
+</body>
+</html>

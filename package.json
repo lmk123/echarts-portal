@@ -1,0 +1,19 @@
+{
+  "name": "echarts-portal",
+  "version": "0.0.1",
+  "description": "A theme for echarts.",
+  "main": "theme.js",
+  "files": [
+    "theme.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lmk123/echarts-portal.git"
+  },
+  "author": "Mingkai Li <mingkai.li02@ele.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lmk123/echarts-portal/issues"
+  },
+  "homepage": "https://github.com/lmk123/echarts-portal#readme"
+}
